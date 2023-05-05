@@ -15,9 +15,6 @@ Coming soon
 ## Requirement
 - [ox_lib](https://github.com/overextended/ox_lib)
 
-## Compatibility
-- Other notification can be set in config.
-
 # Legal
 
 xc_entity
