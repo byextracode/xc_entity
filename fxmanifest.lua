@@ -3,7 +3,7 @@ lua54 'yes'
 game 'gta5'
 
 name "xc_entity"
-version "0.1.0"
+version "1.0.0"
 description "Entity Info Getter. Provides entity owner ID (if networked) and entity model hash."
 author "wibowo#7184"
 
