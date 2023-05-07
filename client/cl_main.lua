@@ -89,6 +89,9 @@ CreateThread(function()
                         type = 'success'
                     })
                 end
+                if IsControlJustPressed(0, Config.detailbutton) then
+                    opendetails(draw_box.entity)
+                end
             end
         end
         Wait(wait)

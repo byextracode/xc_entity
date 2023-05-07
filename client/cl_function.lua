@@ -88,3 +88,53 @@ function drawLines(v)
 	DrawLine(v.t_r_r, v.b_r_r, 255, 255, 255, v.a2)
 	DrawLine(v.t_r_l, v.b_r_l, 255, 255, 255, v.a2)
 end
+
+function opendetails(entity)
+	local isNetworked = NetworkGetEntityIsNetworked(entity)
+	local netId = isNetworked and GetPlayerServerId(NetworkGetEntityOwner(entity)) or "local"
+	local firstOwner = netId
+	if isNetworked then
+		firstOwner = lib.callback.await("xc_entity:getFirstOwner", false, NetworkGetNetworkIdFromEntity(entity))
+	end
+
+	if firstOwner == -1 then
+		firstOwner = ("%s (server)"):format(firstOwner)
+	end
+
+	local data = {
+		('Entity Hash : %s'):format(GetEntityModel(entity)),
+		('Owner ID : %s'):format(netId),
+		('First Owner ID : %s'):format(firstOwner),
+	}
+
+	local options = {}
+	for i = 1, #data do
+		local text = data[i]
+		local isub = text:find(':')
+		local value = text:sub(isub+2)
+		options[i] = {
+			label = data[i], 
+			icon = 'circle-info', 
+			args = value
+		}
+	end
+
+	lib.setMenuOptions('xc_entity', options)
+	lib.showMenu('xc_entity')
+end
+
+CreateThread(function()
+	lib.registerMenu({
+        id = 'xc_entity',
+        title = 'Entity Details',
+        position = 'bottom-right',
+        options = {}
+    }, function(selected, scrollIndex, args)
+        lib.setClipboard(args)
+        lib.notify({
+            title = 'Copied',
+            description = 'The value has been copied to clipboard',
+            type = 'success'
+        })
+    end)
+end)

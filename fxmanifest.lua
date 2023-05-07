@@ -12,3 +12,7 @@ shared_script "config.lua"
 
 client_script "**/cl_*.lua"
 server_script "**/sv_*.lua"
+
+dependencies {
+    "ox_lib"
+}
