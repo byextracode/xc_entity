@@ -123,6 +123,21 @@ function opendetails(entity)
 	lib.showMenu('xc_entity')
 end
 
+function requestDeleteEntity(entity)
+	if not IsEntityAMissionEntity(entity) then
+		SetEntityAsMissionEntity(entity, true, true)
+		local timeout = 3
+		while not IsEntityAMissionEntity(entity) do
+			Wait(1000)
+			timeout -= 1
+			if timeout <= 0 then
+				break
+			end
+		end
+	end
+	DeleteEntity(entity)
+end
+
 CreateThread(function()
 	lib.registerMenu({
         id = 'xc_entity',

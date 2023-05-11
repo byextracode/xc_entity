@@ -52,10 +52,18 @@ CreateThread(function()
                         a2 = 255
                     }
                     current_focused_object = target_object
-                    local netId = NetworkGetEntityIsNetworked(entity) and GetPlayerServerId(NetworkGetEntityOwner(entity)) or "local"
+                    local isNetworked = NetworkGetEntityIsNetworked(entity)
+                    local netId = isNetworked and GetPlayerServerId(NetworkGetEntityOwner(entity)) or "local"
+                    local firstOwner = netId
+                    if isNetworked then
+                        firstOwner = lib.callback.await("xc_entity:getFirstOwner", false, NetworkGetNetworkIdFromEntity(entity))
+                    end
+                    if firstOwner == -1 then
+                        firstOwner = ("%s (server)"):format(firstOwner)
+                    end
                     if not textUI then
                         textUI = true
-                        lib.showTextUI(("Owner ID: %s | Hash: %s"):format(netId, object_hash), {
+                        lib.showTextUI(("Owner ID: %s  \nHash: %s  \nFirst Owner ID : %s"):format(netId, object_hash, firstOwner), {
                             position = "top-center"
                         })
                     end
@@ -91,6 +99,9 @@ CreateThread(function()
                 end
                 if IsControlJustPressed(0, Config.detailbutton) then
                     opendetails(draw_box.entity)
+                end
+                if IsControlJustPressed(0, Config.deletebutton) then
+                    requestDeleteEntity(draw_box.entity)
                 end
             end
         end
