@@ -5,6 +5,7 @@ Provides entity info getter, including entity owner ID (if networked) and entity
 
 ## Feature
 - Provides entity owner ID (if networked) and entity model hash.
+- Provides entity wipes command with specific entity owner, type or model.
 
 - Preview
 Coming soon
