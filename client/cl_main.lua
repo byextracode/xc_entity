@@ -20,6 +20,93 @@ RegisterNetEvent("xc:globalentity", function()
     active = not active
 end)
 
+RegisterNetEvent("xc:globalwipe", function()
+    local invoking = GetInvokingResource()
+    if invoking and invoking ~= GetCurrentResourceName() then
+        return
+    end
+    local input = lib.inputDialog('Global Wipes', {
+        { 
+            type = "number", 
+            label = "Entity Owner",
+            description = "Leave blank to wipe all entity",
+            placeholder = "Player ID",
+            icon = "passport"
+        },
+        {
+            type = "checkbox",
+            label = "Object",
+            icon = "object-ungroup"
+        },
+        {
+            type = "checkbox",
+            label = "Ped",
+            icon = "person"
+        },
+        {
+            type = "checkbox",
+            label = "Vehicle",
+            icon = "car"
+        },
+        {
+            type = "input",
+            label = "Entity model/hash",
+            description = "Leave blank to wipe all model/hash",
+            icon = "hashtag"
+        },
+    })
+
+    if not input then
+        return
+    end
+    
+    local pId = input[1] or -1
+    local object = input[2]
+    local ped = input[3]
+    local vehicle = input[4]
+    local model = input[5]
+    local entity = object or ped or vehicle
+    if pId == 0 then
+        return lib.notify({
+            title = 'Entity Owner is not valid',
+            description = 'Make sure entity owner input',
+            position = 'top',
+            style = {
+                backgroundColor = '#141517',
+                color = '#909296'
+            },
+            icon = 'ban',
+            iconColor = '#C53030'
+        })
+    end
+    if model and type(model) ~= "number" then
+        model = joaat(model)
+    end
+    if not entity then
+        return lib.notify({
+            title = 'Can not proceed',
+            description = 'At least one entity type must be checked',
+            position = 'top',
+            style = {
+                backgroundColor = '#141517',
+                color = '#909296'
+            },
+            icon = 'ban',
+            iconColor = '#C53030'
+        })
+    end
+
+    local data = {
+        pId = pId,
+        object = object,
+        ped = ped,
+        vehicle = vehicle,
+        model = model
+    }
+
+    TriggerServerEvent("xc:entityWipe", data)
+end)
+
 CreateThread(function()
     while true do
         local wait = 1000
