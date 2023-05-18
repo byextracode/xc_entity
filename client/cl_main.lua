@@ -26,8 +26,8 @@ RegisterNetEvent("xc:globalwipe", function()
         return
     end
     local input = lib.inputDialog('Global Wipes', {
-        { 
-            type = "number", 
+        {
+            type = "number",
             label = "Entity Owner",
             description = "Leave blank to wipe all entity",
             placeholder = "Player ID",
@@ -59,7 +59,7 @@ RegisterNetEvent("xc:globalwipe", function()
     if not input then
         return
     end
-    
+
     local pId = input[1] or -1
     local object = input[2]
     local ped = input[3]
@@ -150,7 +150,7 @@ CreateThread(function()
                     end
                     if not textUI then
                         textUI = true
-                        lib.showTextUI(("Owner ID: %s  \nHash: %s  \nFirst Owner ID : %s"):format(netId, object_hash, firstOwner), {
+                        lib.showTextUI(("Owner ID: %s  \nHash: %s  \nFirst Owner ID : %s  \n.  \n[E] Copy Hash  \n[F] Freeze Entity  \n[G] Delete Entity"):format(netId, object_hash, firstOwner), {
                             position = "top-center"
                         })
                     end
@@ -189,6 +189,9 @@ CreateThread(function()
                 end
                 if IsControlJustPressed(0, Config.deletebutton) then
                     requestDeleteEntity(draw_box.entity)
+                end
+                if IsControlJustPressed(0, Config.freezebutton) then
+                    freezeEntity(draw_box.entity)
                 end
             end
         end

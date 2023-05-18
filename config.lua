@@ -7,3 +7,4 @@ Config.commandwipe = "globalwipe"
 Config.copybutton = 38 -- E
 Config.detailbutton = 201 -- Enter/Numpad Enter
 Config.deletebutton = 47 -- G
+Config.freezebutton = 23 -- F

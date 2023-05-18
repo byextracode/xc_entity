@@ -113,8 +113,8 @@ function opendetails(entity)
 		local isub = text:find(':')
 		local value = text:sub(isub+2)
 		options[i] = {
-			label = data[i], 
-			icon = 'circle-info', 
+			label = data[i],
+			icon = 'circle-info',
 			args = value
 		}
 	end
@@ -136,6 +136,10 @@ function requestDeleteEntity(entity)
 		end
 	end
 	DeleteEntity(entity)
+end
+
+function freezeEntity(entity)
+	FreezeEntityPosition(entity, not IsEntityPositionFrozen(entity))
 end
 
 CreateThread(function()
