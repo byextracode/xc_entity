@@ -7,8 +7,9 @@ Provides entity info getter, including entity owner ID (if networked) and entity
 - Provides entity owner ID (if networked) and entity model hash.
 - Provides entity wipes command with specific entity owner, type or model.
 
-- Preview
-Coming soon
+## Preview
+- [Preview 1](https://i.imgur.com/zh08kNW.png)
+- [Preview 2](https://i.imgur.com/Q6xBUQo.png)
 
 ## Framework
 - Any
