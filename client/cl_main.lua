@@ -80,7 +80,7 @@ RegisterNetEvent("xc:globalwipe", function()
         })
     end
     if model and type(model) ~= "number" then
-        model = joaat(model)
+        model = tonumber(model) or joaat(model)
     end
     if not entity then
         return lib.notify({
