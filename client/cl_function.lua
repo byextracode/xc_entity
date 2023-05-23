@@ -124,6 +124,9 @@ function opendetails(entity)
 end
 
 function requestDeleteEntity(entity)
+	if not DoesEntityExist(entity) then
+		return
+	end
 	if not IsEntityAMissionEntity(entity) then
 		SetEntityAsMissionEntity(entity, true, true)
 		local timeout = 3
@@ -136,10 +139,28 @@ function requestDeleteEntity(entity)
 		end
 	end
 	DeleteEntity(entity)
+	CreateThread(function()
+		Wait(1000)
+		if DoesEntityExist(entity) then
+			lib.notify({
+				title = 'Failed',
+				type = 'error'
+			})
+		end
+		lib.notify({
+			title = 'Deleted',
+			type = 'success'
+		})
+	end)
 end
 
 function freezeEntity(entity)
-	FreezeEntityPosition(entity, not IsEntityPositionFrozen(entity))
+	local isFroze = IsEntityPositionFrozen(entity)
+	FreezeEntityPosition(entity, not isFroze)
+	lib.notify({
+		title = isFroze and "Un-Freeze" or "Freeze",
+		type = 'success'
+	})
 end
 
 CreateThread(function()

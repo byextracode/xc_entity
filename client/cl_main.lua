@@ -10,7 +10,7 @@ local drawLines = drawLines
 
 local active = false
 local target_object = nil
-local current_focused_object = nil
+local current_focused_object = 0
 local object_hash = 0
 local dim_min, dim_max = vector3(0.0, 0.0, 0.0), vector3(0.0, 0.0, 0.0)
 local draw_box = {}
@@ -138,7 +138,6 @@ CreateThread(function()
                         a = 21,
                         a2 = 255
                     }
-                    current_focused_object = target_object
                     local isNetworked = NetworkGetEntityIsNetworked(entity)
                     local netId = isNetworked and GetPlayerServerId(NetworkGetEntityOwner(entity)) or "local"
                     local firstOwner = netId
@@ -148,16 +147,17 @@ CreateThread(function()
                     if firstOwner == -1 then
                         firstOwner = ("%s (server)"):format(firstOwner)
                     end
-                    if not textUI then
+                    if target_object ~= current_focused_object then
                         textUI = true
                         lib.showTextUI(("Owner ID: %s  \nHash: %s  \nFirst Owner ID : %s  \n.  \n[E] Copy Hash  \n[F] Freeze Entity  \n[G] Delete Entity"):format(netId, object_hash, firstOwner), {
                             position = "top-center"
                         })
                     end
+                    current_focused_object = target_object
                 end
             else
                 draw_box = {}
-                current_focused_object = nil
+                current_focused_object = 0
                 if textUI then
                     textUI = false
                     lib.hideTextUI()
