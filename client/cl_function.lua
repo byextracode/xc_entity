@@ -47,46 +47,8 @@ function DrawLaser(color)
     return hit, coords, entity
 end
 
--- credit to https://github.com/Puntherline
--- ####################### Functions #######################
-function drawPolys(v)
-	-- Starting top left, going counter-clockwise when looking at that side
-	-- Top
-	DrawPoly(v.t_f_l, v.t_r_l, v.t_r_r, v.r, v.g, v.b, v.a)
-	DrawPoly(v.t_r_r, v.t_f_r, v.t_f_l, v.r, v.g, v.b, v.a)
-	-- Bottom
-	DrawPoly(v.b_f_r, v.b_r_r, v.b_r_l, v.r, v.g, v.b, v.a)
-	DrawPoly(v.b_r_l, v.b_f_l, v.b_f_r, v.r, v.g, v.b, v.a)
-	-- Front
-	DrawPoly(v.t_f_r, v.b_f_r, v.b_f_l, v.r, v.g, v.b, v.a)
-	DrawPoly(v.b_f_l, v.t_f_l, v.t_f_r, v.r, v.g, v.b, v.a)
-	-- Rear
-	DrawPoly(v.t_r_l, v.b_r_l, v.b_r_r, v.r, v.g, v.b, v.a)
-	DrawPoly(v.b_r_r, v.t_r_r, v.t_r_l, v.r, v.g, v.b, v.a)
-	-- Left
-	DrawPoly(v.t_f_l, v.b_f_l, v.b_r_l, v.r, v.g, v.b, v.a)
-	DrawPoly(v.b_r_l, v.t_r_l, v.t_f_l, v.r, v.g, v.b, v.a)
-	-- Right
-	DrawPoly(v.t_r_r, v.b_r_r, v.b_f_r, v.r, v.g, v.b, v.a)
-	DrawPoly(v.b_f_r, v.t_f_r, v.t_r_r, v.r, v.g, v.b, v.a)
-end
-
-function drawLines(v)
-	-- Top
-	DrawLine(v.t_f_l, v.t_f_r, 255, 255, 255, v.a2)
-	DrawLine(v.t_f_r, v.t_r_r, 255, 255, 255, v.a2)
-	DrawLine(v.t_r_r, v.t_r_l, 255, 255, 255, v.a2)
-	DrawLine(v.t_r_l, v.t_f_l, 255, 255, 255, v.a2)
-	-- Bottom
-	DrawLine(v.b_f_l, v.b_f_r, 255, 255, 255, v.a2)
-	DrawLine(v.b_f_r, v.b_r_r, 255, 255, 255, v.a2)
-	DrawLine(v.b_r_r, v.b_r_l, 255, 255, 255, v.a2)
-	DrawLine(v.b_r_l, v.b_f_l, 255, 255, 255, v.a2)
-	-- Bottom
-	DrawLine(v.t_f_l, v.b_f_l, 255, 255, 255, v.a2)
-	DrawLine(v.t_f_r, v.b_f_r, 255, 255, 255, v.a2)
-	DrawLine(v.t_r_r, v.b_r_r, 255, 255, 255, v.a2)
-	DrawLine(v.t_r_l, v.b_r_l, 255, 255, 255, v.a2)
+function drawOutline(entity, toggle)
+	SetEntityDrawOutline(entity, toggle)
 end
 
 function opendetails(entity)

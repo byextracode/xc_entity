@@ -11,6 +11,7 @@ local drawLines = drawLines
 local active = false
 local target_object = nil
 local current_focused_object = 0
+local current_entity_outline = 0
 local object_hash = 0
 local dim_min, dim_max = vector3(0.0, 0.0, 0.0), vector3(0.0, 0.0, 0.0)
 local draw_box = {}
@@ -174,8 +175,13 @@ CreateThread(function()
         if next(draw_box) then
             if IsEntityOnScreen(draw_box.entity) then
                 wait = 0
-                drawPolys(draw_box)
-                drawLines(draw_box)
+                if draw_box.entity ~= current_entity_outline then
+                    drawOutline(draw_box.entity, true)
+                    if current_entity_outline ~= 0 then
+                        drawOutline(current_entity_outline, false)
+                    end
+                    current_entity_outline = draw_box.entity
+                end
                 if IsControlJustPressed(0, Config.copybutton) then
                     lib.setClipboard(object_hash)
                     lib.notify({
@@ -193,6 +199,16 @@ CreateThread(function()
                 if IsControlJustPressed(0, Config.freezebutton) then
                     freezeEntity(draw_box.entity)
                 end
+            else
+                if current_entity_outline ~= 0 then
+                    drawOutline(current_entity_outline, false)
+                    current_entity_outline = 0
+                end
+            end
+        else
+            if current_entity_outline ~= 0 then
+                drawOutline(current_entity_outline, false)
+                current_entity_outline = 0
             end
         end
         Wait(wait)
