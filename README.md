@@ -8,8 +8,8 @@ Provides entity info getter, including entity owner ID (if networked) and entity
 - Provides entity wipes command with specific entity owner, type or model.
 
 ## Preview
-- [Preview 1](https://i.imgur.com/dUiZBQR.png)
-- [Preview 2](https://i.imgur.com/gN2buJr.png)
+- [Preview 1](https://i.imgur.com/dfrZU1q.png)
+- [Preview 2](https://i.imgur.com/FHa2SpG.png)
 
 ## Framework
 - Any
