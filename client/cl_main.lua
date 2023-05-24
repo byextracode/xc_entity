@@ -16,9 +16,22 @@ local object_hash = 0
 local dim_min, dim_max = vector3(0.0, 0.0, 0.0), vector3(0.0, 0.0, 0.0)
 local draw_box = {}
 local number_handle = 0
+local textUI = false
 
 RegisterNetEvent("xc:globalentity", function()
     active = not active
+    if active then
+        return
+    end
+    if textUI then
+        textUI = false
+        lib.hideTextUI()
+    end
+    if current_entity_outline ~= 0 then
+        drawOutline(current_entity_outline, false)
+        current_entity_outline = 0
+    end
+    draw_box = {}
 end)
 
 RegisterNetEvent("xc:globalwipe", function()
@@ -175,12 +188,25 @@ CreateThread(function()
         if next(draw_box) then
             if IsEntityOnScreen(draw_box.entity) then
                 wait = 0
-                if draw_box.entity ~= current_entity_outline then
-                    drawOutline(draw_box.entity, true)
+                local number_handle = draw_box.entity
+                draw_box.b_r_l = GetOffsetFromEntityInWorldCoords(number_handle, draw_box.dim_min)
+                draw_box.b_r_r = GetOffsetFromEntityInWorldCoords(number_handle, draw_box.dim_max.x, draw_box.dim_min.yz)
+                draw_box.b_f_l = GetOffsetFromEntityInWorldCoords(number_handle, draw_box.dim_min.x, draw_box.dim_max.y, draw_box.dim_min.z)
+                draw_box.b_f_r = GetOffsetFromEntityInWorldCoords(number_handle, draw_box.dim_max.xy, draw_box.dim_min.z)
+                draw_box.t_r_l = GetOffsetFromEntityInWorldCoords(number_handle, draw_box.dim_min.xy, draw_box.dim_max.z)
+                draw_box.t_r_r = GetOffsetFromEntityInWorldCoords(number_handle, draw_box.dim_max.x, draw_box.dim_min.y, draw_box.dim_max.z)
+                draw_box.t_f_l = GetOffsetFromEntityInWorldCoords(number_handle, draw_box.dim_min.x, draw_box.dim_max.yz)
+                draw_box.t_f_r = GetOffsetFromEntityInWorldCoords(number_handle, draw_box.dim_max)
+                drawPolys(draw_box)
+                drawLines(draw_box)
+                if number_handle ~= current_entity_outline then
+                    if GetEntityType(number_handle) >= 2 then
+                        drawOutline(number_handle, true)
+                    end
                     if current_entity_outline ~= 0 then
                         drawOutline(current_entity_outline, false)
                     end
-                    current_entity_outline = draw_box.entity
+                    current_entity_outline = number_handle
                 end
                 if IsControlJustPressed(0, Config.copybutton) then
                     lib.setClipboard(object_hash)
@@ -191,13 +217,13 @@ CreateThread(function()
                     })
                 end
                 if IsControlJustPressed(0, Config.detailbutton) then
-                    opendetails(draw_box.entity)
+                    opendetails(number_handle)
                 end
                 if IsControlJustPressed(0, Config.deletebutton) then
-                    requestDeleteEntity(draw_box.entity)
+                    requestDeleteEntity(number_handle)
                 end
                 if IsControlJustPressed(0, Config.freezebutton) then
-                    freezeEntity(draw_box.entity)
+                    freezeEntity(number_handle)
                 end
             else
                 if current_entity_outline ~= 0 then
