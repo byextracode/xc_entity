@@ -1,3 +1,5 @@
+local Entities = {}
+
 RegisterCommand(Config.commandlaser, function(source, args, raw)
     TriggerClientEvent("xc:globalentity", source)
 end, true)
@@ -8,8 +10,29 @@ end, true)
 
 lib.callback.register("xc_entity:getFirstOwner", function(source, netId)
     local entity = NetworkGetEntityFromNetworkId(netId)
+    return Entities[netId] or NetworkGetFirstEntityOwner(entity)
+end)
+
+AddEventHandler('entityCreating', function(entity)
+    if IsPedAPlayer(entity) then
+        return
+    end
+
+    local netId = NetworkGetNetworkIdFromEntity(entity)
     local firstOwner = NetworkGetFirstEntityOwner(entity)
-    return firstOwner
+    Entities[netId] = firstOwner
+end)
+
+AddEventHandler('entityRemoved', function(entity)
+    if IsPedAPlayer(entity) then
+        return
+    end
+
+    local netId = NetworkGetNetworkIdFromEntity(entity)
+    if not Entities[netId] then
+        return
+    end
+    Entities[netId] = nil
 end)
 
 RegisterNetEvent("xc:entityWipe", function(data)
