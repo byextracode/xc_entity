@@ -1,4 +1,4 @@
-local Entities = {}
+Entities = {}
 
 RegisterCommand(Config.commandlaser, function(source, args, raw)
     TriggerClientEvent("xc:globalentity", source)
