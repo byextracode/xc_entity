@@ -96,40 +96,6 @@ function drawOutline(entity, toggle)
 	SetEntityDrawOutline(entity, toggle)
 end
 
-function opendetails(entity)
-	local isNetworked = NetworkGetEntityIsNetworked(entity)
-	local netId = isNetworked and GetPlayerServerId(NetworkGetEntityOwner(entity)) or "local"
-	local firstOwner = netId
-	if isNetworked then
-		firstOwner = lib.callback.await("xc_entity:getFirstOwner", false, NetworkGetNetworkIdFromEntity(entity))
-	end
-
-	if firstOwner == -1 then
-		firstOwner = ("%s (server)"):format(firstOwner)
-	end
-
-	local data = {
-		('Entity Hash : %s'):format(GetEntityModel(entity)),
-		('Owner ID : %s'):format(netId),
-		('First Owner ID : %s'):format(firstOwner),
-	}
-
-	local options = {}
-	for i = 1, #data do
-		local text = data[i]
-		local isub = text:find(':')
-		local value = text:sub(isub+2)
-		options[i] = {
-			label = data[i],
-			icon = 'circle-info',
-			args = value
-		}
-	end
-
-	lib.setMenuOptions('xc_entity', options)
-	lib.showMenu('xc_entity')
-end
-
 function requestDeleteEntity(entity)
 	if not DoesEntityExist(entity) then
 		return

@@ -216,9 +216,6 @@ CreateThread(function()
                         type = 'success'
                     })
                 end
-                if IsControlJustPressed(0, Config.detailbutton) then
-                    opendetails(number_handle)
-                end
                 if IsControlJustPressed(0, Config.deletebutton) then
                     requestDeleteEntity(number_handle)
                 end
