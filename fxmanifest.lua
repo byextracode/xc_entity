@@ -4,7 +4,7 @@ game 'gta5'
 
 name "xc_entity"
 version "1.0.0"
-description "Entity Info Getter. Provides entity owner ID (if networked) and entity model hash."
+description "Provides entity management."
 author "wibowo#7184"
 
 shared_script "@ox_lib/init.lua"
