@@ -19,6 +19,10 @@ Provides entity info getter, including entity owner ID (if networked) and entity
 ## Requirement
 - [ox_lib](https://github.com/overextended/ox_lib)
 
+## Credits
+- [TheExquis](https://github.com/TheExquis) | Laser draw function
+- [Puntherline](https://github.com/Puntherline) | Polys and line draw function
+
 # Legal
 
 xc_entity

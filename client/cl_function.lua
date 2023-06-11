@@ -5,7 +5,7 @@ local StartShapeTestRay = StartShapeTestRay
 local DrawLine = DrawLine
 local DrawPoly = DrawPoly
 
--- credit to https://github.com/TheExquis
+-- credit to https://github.com/TheExquis/ex-3dcoord/blob/main/client/client.lua#L2
 function RotationToDirection(rotation)
 	local adjustedRotation =
 	{
@@ -47,7 +47,7 @@ function DrawLaser(color)
     return hit, coords, entity
 end
 
--- credit to https://github.com/Puntherline
+-- credit to https://github.com/Puntherline/pun_propinfo/blob/main/pun_propinfo/client/cl_main.lua#L78
 -- ####################### Functions #######################
 function drawPolys(v)
 	-- Starting top left, going counter-clockwise when looking at that side
