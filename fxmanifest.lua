@@ -3,7 +3,7 @@ lua54 'yes'
 game 'gta5'
 
 name "xc_entity"
-version "1.0.0"
+version "1.0.1"
 description "Provides entity management."
 author "wibowo#7184"
 
