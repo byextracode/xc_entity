@@ -58,3 +58,23 @@ RegisterNetEvent("xc:entityWipe", function(data)
         iconColor = '#00ff00'
     })
 end)
+
+RegisterNetEvent("xc:EntityDelete", function(netId)
+    local source = source
+    if not IsPlayerAceAllowed(source, ("command.%s"):format(Config.commandwipe)) then
+        return
+    end
+    local entity = NetworkGetEntityFromNetworkId(netId)
+    if not DoesEntityExist(entity) then return end
+    DeleteEntity(entity)
+end)
+
+RegisterNetEvent("xc:request:EntityFreeze", function(netId)
+    local source = source
+    if not IsPlayerAceAllowed(source, ("command.%s"):format(Config.commandwipe)) then
+        return
+    end
+    local entity = NetworkGetEntityFromNetworkId(netId)
+    if not DoesEntityExist(entity) then return end
+    TriggerClientEvent("xc:response:EntityFreeze", NetworkGetEntityOwner(entity), netId)
+end)

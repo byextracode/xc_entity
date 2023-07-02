@@ -121,6 +121,11 @@ RegisterNetEvent("xc:globalwipe", function()
     TriggerServerEvent("xc:entityWipe", data)
 end)
 
+RegisterNetEvent("xc:request:EntityFreeze", function(netId)
+    if not NetworkDoesEntityExistWithNetworkId(netId) then return end
+    freezeEntity(NetworkGetEntityFromNetworkId(netId))
+end)
+
 CreateThread(function()
     while true do
         local wait = 1000
@@ -217,10 +222,18 @@ CreateThread(function()
                     })
                 end
                 if IsControlJustPressed(0, Config.deletebutton) then
-                    requestDeleteEntity(number_handle)
+                    if NetworkHasControlOfEntity(number_handle) then
+                        requestDeleteEntity(number_handle)
+                    else
+                        TriggerServerEvent("xc:EntityDelete", NetworkGetNetworkIdFromEntity(number_handle))
+                    end
                 end
                 if IsControlJustPressed(0, Config.freezebutton) then
-                    freezeEntity(number_handle)
+                    if NetworkHasControlOfEntity(number_handle) then
+                        freezeEntity(number_handle)
+                    else
+                        TriggerServerEvent("xc:request:EntityFreeze", NetworkGetNetworkIdFromEntity(number_handle))
+                    end
                 end
             else
                 if current_entity_outline ~= 0 then
